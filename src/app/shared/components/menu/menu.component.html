@@ -1,0 +1,16 @@
+<br>
+<br>
+<br>
+<nav>
+    <ul>
+      <li (click)="toggleSubMenu('item1')">
+        Item 1
+        <app-submenu *ngIf="activeSubMenu === 'item1'"></app-submenu>
+      </li>
+      <li (click)="toggleSubMenu('item2')">
+        Item 2
+        <app-submenu *ngIf="activeSubMenu === 'item2'"></app-submenu>
+      </li>
+      <!-- Adicione mais itens do menu conforme necessário -->
+    </ul>
+  </nav>

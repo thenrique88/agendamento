@@ -1,0 +1,18 @@
+<div class="dia-semana">
+    <div class="data">
+        {{descricao}}
+    </div>
+    <div class="dia">
+
+    </div>
+    <div class="justify-content-start">
+
+        @for (item of horarios; track horarios) {
+        <button type="button" (click)="openDialog()" class="btn btn-outline-success btn-sm m-1">{{item.horario}}</button>
+        }
+        @empty {
+            Nenhum horário disponível
+        }
+
+    </div>
+</div>

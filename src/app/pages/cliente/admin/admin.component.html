@@ -1,0 +1,34 @@
+<mat-sidenav-container class="example-container">
+    <!-- Sidebar -->
+    <mat-sidenav mode="side" opened="true">
+    
+
+    <app-menu></app-menu>
+      
+    </mat-sidenav>
+  
+    <!-- Content -->
+    <mat-sidenav-content>
+      <!-- Toolbar -->
+      <mat-toolbar color="primary">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Admin Panel</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="changeTheme('default')">Default Theme</button>
+          <button mat-menu-item (click)="changeTheme('dark')">Dark Theme</button>
+        </mat-menu>
+      </mat-toolbar>
+  
+      <!-- Main Content -->
+      <div class="example-sidenav-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
