@@ -6,7 +6,10 @@ import { catchError } from 'rxjs/operators';
 export class HttpRequestInterceptor implements HttpInterceptor{
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req).pipe(
+
+      const clonedRequest = req.clone({headers: req.headers.append('ngrok-skip-browser-warning', '69420')});
+      
+        return next.handle(clonedRequest).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
             if (error.error instanceof ErrorEvent) {
