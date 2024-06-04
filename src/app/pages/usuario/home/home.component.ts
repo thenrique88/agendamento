@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -18,6 +18,9 @@ import { HorarioModel } from '../../../shared/models/horario.model';
 import { AgendamentoDialogComponent } from './components/agendamento-dialog/agendamento-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { AgendamentoService } from '../../../services/agendamento.service';
+import { HorariosSemanaModel } from '../../../shared/models/horarios-semana-model';
+import { AgendamentoModel } from '../../../shared/models/agendamento.model';
 
 @Component({
   selector: 'app-home',
@@ -34,35 +37,21 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   selected: Date | null | undefined;
 
+  horariosSemana!: HorariosSemanaModel;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private agendamentoService: AgendamentoService) {}
 
-  horariosManha: HorarioModel[] = [
-    { horario: '08:30' },
-    { horario: '09:30' },
-    { horario: '10:30' },
-    { horario: '11:30' }
-    
-  ];
-  horariosTarde: HorarioModel[] = [
-    { horario: '13:30' },
-    { horario: '14:30' },
-    { horario: '16:00' },
-    { horario: '17:30' }
-
-  ];
-  horariosNoite: HorarioModel[] = [
-    { horario: '18:30' },
-    { horario: '19:30' },
-    { horario: '21:00' }
-
-  ];
-
-  openDialog(): void {
-    this.router.navigate(['agendamento'], {queryParams: {ag: 123}})
+  ngOnInit(): void {
+    this.agendamentoService.buscarAgendamentosDaSemana().subscribe(
+      response => this.horariosSemana = response
+    );
+  }
+  
+  selecionarHorario(agendamento: AgendamentoModel): void {
+    this.router.navigate(['agendamento'], {queryParams: {ag: agendamento.id}})
   }
   
 }

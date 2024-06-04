@@ -34,11 +34,12 @@
                                 <div class="titulo-opaco">
                                     <b>CONFIRMAR AGENDAMENTO</b>
                                 </div>
+                                <br>
                                 <div class="titulo-opaco">
-                                    <i class="fa-regular fa-calendar"></i> &nbsp; 25/05/2024
+                                    <i class="fa-regular fa-calendar"></i> &nbsp; {{agendamento.data}}
                                 </div>
                                 <div class="titulo-opaco">
-                                    <i class="fa-solid fa-clock"></i> &nbsp; 08:30
+                                    <i class="fa-solid fa-clock"></i> &nbsp; {{agendamento.horarioInicio}} às {{agendamento.horarioFim}}
                                 </div>
                                 <div class="titulo-opaco">
                                     <i class="fa-solid fa-road"></i> &nbsp; Av. Portugal 4273 - Sala 303 - Itapoã
@@ -47,7 +48,7 @@
 
                                     <form [formGroup]="formDados" (ngSubmit)="submitDados()">
 
-                                        @if(showForm){
+                                        @if(exibirFormLogin){
                                         <div>
                                             <div class="mt-3">
                                                 <label for="exampleFormControlInput1" class="form-label">Nome</label>
@@ -65,7 +66,7 @@
                                                 </div>
                                             </div>
                                             <div class="mt-3">
-                                                <button type="submit" class="btn btn-success w-100">Agendar</button>
+                                                <button type="submit" class="btn btn-success w-100" [disabled]="formDados.get('whatsapp')?.invalid || formDados.get('nome')?.invalid">Enviar</button>
                                             </div>
                                             <div class="mt-3">
                                                 <button type="button" (click)="voltarPagina()" class="btn btn-secondary w-100">Voltar</button>
@@ -74,24 +75,72 @@
                                         }
 
                                     </form>
-                                    @if(!showForm){
+                                    <form [formGroup]="formCodigo" (ngSubmit)="submitCodigo()">
+                                    @if(exibirFormCodigoConfirmacao){
 
                                     <div class="mt-4">
-                                        <label for="exampleFormControlInput1" class="form-label">Código</label>
-                                        <input type="text" class="form-control">
+                                        <label class="form-label">Código</label>
+                                        <input type="text" class="form-control" formControlName="codigo" mask="000000">
                                     </div>
                                     <div class="mt-3" style="display: flex; justify-content: space-between;">
 
                                         <div>
-                                            <button type="button" class="btn btn-success">Confirmar</button>
+                                            <button type="submit" class="btn btn-success">Confirmar</button>
                                         </div>
                                         <div>
                                             <button type="button" class="btn btn-secondary">Não recebi</button>
-
                                         </div>
                                     </div>
-                                    }
 
+                                    
+                                    }
+                                </form>
+
+                                    @if(exibirFormDadosCliente)
+                                    {
+                                        <div class="mt-3" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <span>Bem vindo(a)! <h5>{{cliente.nome}}</h5></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <span>Confira os dados do agendamento. Podemos confirmar o seu agendamento?</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-success w-100" (click)="confirmarAgendamento()">Confirmar agendamento</button>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <button type="button" (click)="voltarPagina()" class="btn btn-secondary w-100">Voltar</button>
+                                        </div>
+                                    }
+                                    
+                                    @if(exibirAgendamentoConfirmado){
+                                        <div class="mt-3" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <span><h4>Tudo certo!</h4> <h5>{{cliente.nome}}</h5></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <span><h6>Seu atendimento foi agendado com sucesso.</h6></span>
+                                                <span><h6>Obrigada pelo seu agendamento.</h6></span>
+                                                <br>
+                                                @if(exibirMensagemConfirmacaoWhatsapp){
+                                                    <span>Você receberá uma confirmação no seu Whatsapp dentro de alguns instantes. </span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <button type="button" (click)="voltarPagina()" class="btn btn-secondary w-100">Voltar</button>
+                                        </div>
+                                    }
                                 </div>
 
                             </div>

@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { AgendamentoService } from '../../../services/agendamento.service';
+import { ActivatedRoute } from '@angular/router';
+import { AgendamentoModel } from '../../../shared/models/agendamento.model';
+import { ClienteService } from '../../../services/cliente.service';
+import { LoginClienteModel } from '../../../shared/models/login-cliente.model';
+import { ClienteModel } from '../../../shared/models/cliente.model';
 
 @Component({
   selector: 'app-agendamento',
@@ -10,36 +16,146 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    NgxMaskDirective, 
+    NgxMaskDirective,
     NgxMaskPipe
   ],
   templateUrl: './agendamento.component.html',
   styleUrl: './agendamento.component.scss'
 })
-export class AgendamentoComponent {
+export class AgendamentoComponent implements OnInit {
+
+  formDados: FormGroup;
+  formCodigo: FormGroup;
+
+  cliente!: ClienteModel;
+  idAgendamento = '';
+  agendamento: AgendamentoModel = {};
 
   loading = false;
-  showForm = true;
-  formDados: FormGroup;
-  formCodigo = FormGroup;
+  exibirFormLogin = true;
+  exibirFormCodigoConfirmacao = false;
+  exibirFormDadosCliente = false;
+  exibirAgendamentoConfirmado = false;
+  exibirMensagemConfirmacaoWhatsapp = false;
+  
 
-  constructor(private formBuilder: FormBuilder){
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private agendamentoService: AgendamentoService, private clienteService: ClienteService) {
+
     this.formDados = formBuilder.group({
       nome: ['', Validators.required],
       whatsapp: ['', Validators.required]
     });
+
+    this.formCodigo = formBuilder.group({
+      codigo: ['', Validators.required]
+    });
+
+  }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.idAgendamento = params['ag'];
+    });
+
+    this.buscarDadosAgendamento(this.idAgendamento);
+    this.validarClienteLogado();
   }
 
-  submitDados(): void{
-    if(this.formDados.valid){
-      this.showForm = false;
-      alert('valido');
+  buscarDadosAgendamento(id: string) {
+    this.agendamentoService.buscarAgendamento(id)
+      .subscribe(result => {
+        this.agendamento = result.data;
+        if(this.agendamento.status === 'agendado'){
+          this.exibirAgendamentoConfirmado = true;
+          this.exibirFormCodigoConfirmacao = false;
+          this.exibirFormDadosCliente = false;
+          this.exibirFormLogin = false;
+        }
+      });
+
+      
+  }
+
+  submitDados(): void {
+    if (this.formDados.valid) {
+
+      const dadosCliente : LoginClienteModel = {
+        nome: this.formDados.get('nome')?.value,
+        whatsapp: this.formDados.get('whatsapp')?.value
+      };
+
+      this.clienteService.enviarCodigoConfirmacaoLogin(dadosCliente)
+      .subscribe(r =>{
+        if(r.sucesso){
+          this.exibirFormLogin = false;
+          this.exibirFormCodigoConfirmacao = true;
+          this.setarClienteLogado(r.data);
+          this.cliente = r.data;
+        }
+        else{
+
+        }
+      });
     }
-    else{
+    else {
     }
   }
 
-  voltarPagina(){
+  submitCodigo(): void {
+    if (this.formCodigo.valid) {
+
+      this.clienteService.confirmarCodigoLoginCliente(this.cliente.id, this.formCodigo.get('codigo')?.value)
+      .subscribe(r =>{
+        if(r.sucesso){
+          this.exibirFormLogin = false;
+          this.exibirFormCodigoConfirmacao = false;
+          this.exibirFormDadosCliente = true;
+        }
+        else{
+          alert('codigo incorreto');
+        }
+      });
+    }
+    else {
+    }
+  }
+
+  validarClienteLogado(){
+    if(localStorage.getItem('cliente') !== null){
+      
+      let cliente: ClienteModel = JSON.parse(localStorage.getItem('cliente')!);
+      this.setarClienteLogado(cliente);
+      this.cliente = cliente;
+      this.exibirFormLogin = false;
+      this.exibirFormCodigoConfirmacao = false;
+      this.exibirFormDadosCliente = true;
+
+    }
+  }
+
+  setarClienteLogado(cliente: ClienteModel ){
+    localStorage.removeItem('cliente');
+    localStorage.setItem('cliente', JSON.stringify(cliente));
+  }
+
+  confirmarAgendamento(){
+    this.agendamentoService.confirmarAgendamento(this.cliente.id, this.idAgendamento)
+    .subscribe(r =>{
+      if(r.sucesso){
+        this.exibirFormDadosCliente = false;
+        this.exibirAgendamentoConfirmado = true;
+        this.exibirMensagemConfirmacaoWhatsapp = true;
+      }
+      else{
+        alert('Tem erro');
+      }
+    });
+  }
+
+  preencherDadosCliente(){
+
+  }
+
+  voltarPagina() {
     history.back();
   }
 
