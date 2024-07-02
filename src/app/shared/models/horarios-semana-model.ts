@@ -1,7 +1,9 @@
 import { AgendamentoModel } from "./agendamento.model";
 
 export interface HorariosSemanaModel{
-    semana: string;
+    semana?: string;
+    dataProximaSemana?: string;
+    dataSemanaAnterior?: string;
     segunda: DiaDaSemana;
     terca: DiaDaSemana;
     quarta: DiaDaSemana;

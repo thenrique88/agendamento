@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -16,11 +16,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { PeriodoAgendaComponent } from './components/periodo-agenda/periodo-agenda.component';
 import { HorarioModel } from '../../../shared/models/horario.model';
 import { AgendamentoDialogComponent } from './components/agendamento-dialog/agendamento-dialog.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { AgendamentoService } from '../../../services/agendamento.service';
 import { HorariosSemanaModel } from '../../../shared/models/horarios-semana-model';
 import { AgendamentoModel } from '../../../shared/models/agendamento.model';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-home',
@@ -28,10 +29,11 @@ import { AgendamentoModel } from '../../../shared/models/agendamento.model';
   imports: [
     MatButtonModule,
     MatIconModule,
-    PeriodoAgendaComponent, 
+    PeriodoAgendaComponent,
     MatDatepickerModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './home.component.html',
@@ -39,19 +41,33 @@ import { AgendamentoModel } from '../../../shared/models/agendamento.model';
 })
 export class HomeComponent implements OnInit {
   selected: Date | null | undefined;
-
+  loading = false;
   horariosSemana!: HorariosSemanaModel;
 
-  constructor(private router: Router, private agendamentoService: AgendamentoService) {}
+  constructor(private router: Router, private agendamentoService: AgendamentoService) {
+
+  }
 
   ngOnInit(): void {
-    this.agendamentoService.buscarAgendamentosDaSemana().subscribe(
-      response => this.horariosSemana = response
-    );
+    this.buscarHorarioDaSemana();
   }
-  
+
   selecionarHorario(agendamento: AgendamentoModel): void {
-    this.router.navigate(['agendamento'], {queryParams: {ag: agendamento.id}})
+    this.router.navigate(['agendamento'], { queryParams: { ag: agendamento.id } })
   }
-  
+
+  buscarHorarioDaSemana(dataInicial?: string) {
+    this.loading = true;
+    if (dataInicial === undefined) {
+      this.agendamentoService.buscarAgendamentosDaSemana().subscribe(
+        response => { this.horariosSemana = response; this.loading = false; }
+      );
+    }else{
+      this.agendamentoService.buscarAgendamentosDaSemana(dataInicial).subscribe(
+        response => { this.horariosSemana = response; this.loading = false; }
+      );
+    }
+
+  }
+
 }

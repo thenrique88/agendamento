@@ -8,6 +8,7 @@ import { AgendamentoModel } from '../../../shared/models/agendamento.model';
 import { ClienteService } from '../../../services/cliente.service';
 import { LoginClienteModel } from '../../../shared/models/login-cliente.model';
 import { ClienteModel } from '../../../shared/models/cliente.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-agendamento',
@@ -37,9 +38,10 @@ export class AgendamentoComponent implements OnInit {
   exibirFormDadosCliente = false;
   exibirAgendamentoConfirmado = false;
   exibirMensagemConfirmacaoWhatsapp = false;
+  desabilitarBotaoReenviarCodigo = false;
   
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private agendamentoService: AgendamentoService, private clienteService: ClienteService) {
+  constructor(private route: ActivatedRoute, private toastrService: ToastrService, private formBuilder: FormBuilder, private agendamentoService: AgendamentoService, private clienteService: ClienteService) {
 
     this.formDados = formBuilder.group({
       nome: ['', Validators.required],
@@ -100,6 +102,27 @@ export class AgendamentoComponent implements OnInit {
     }
   }
 
+  reenviarCodigoConfirmacao(){
+    const dadosCliente : LoginClienteModel = {
+      nome: this.cliente.nome,
+      whatsapp: this.cliente.whatsapp
+    };
+
+    this.clienteService.reenviarCodigoConfirmacaoLogin(dadosCliente)
+      .subscribe(r =>{
+        if(r.sucesso){
+          this.toastrService.success('Código reenviado para seu Whatsapp.');
+          this.desabilitarBotaoReenviarCodigo = true;
+          setTimeout(() => {
+            this.desabilitarBotaoReenviarCodigo = false;
+          }, 30000);
+        }
+        else{
+
+        }
+      });
+  }
+
   submitCodigo(): void {
     if (this.formCodigo.valid) {
 
@@ -111,7 +134,7 @@ export class AgendamentoComponent implements OnInit {
           this.exibirFormDadosCliente = true;
         }
         else{
-          alert('codigo incorreto');
+          this.toastrService.error('Código incorreto.');
         }
       });
     }
@@ -138,12 +161,12 @@ export class AgendamentoComponent implements OnInit {
   }
 
   confirmarAgendamento(){
-    this.agendamentoService.confirmarAgendamento(this.cliente.id, this.idAgendamento)
+    this.agendamentoService.agendarAtendimento(this.cliente.id, this.idAgendamento)
     .subscribe(r =>{
       if(r.sucesso){
         this.exibirFormDadosCliente = false;
         this.exibirAgendamentoConfirmado = true;
-        this.exibirMensagemConfirmacaoWhatsapp = true;
+        this.exibirMensagemConfirmacaoWhatsapp = false;
       }
       else{
         alert('Tem erro');

@@ -1,1 +1,83 @@
-<p>agenda works!</p>
+
+<div class="row">
+    <div class="col-4">
+        <div class="form-group">
+            <label for="mes">Mês:</label>
+            <select class="form-select" [(ngModel)]="mesSelecionado" (change)="onMesChange()">
+                <option *ngFor="let mes of meses; let i = index" [value]="i">{{ mes }}</option>
+              </select>
+        
+        </div>
+    </div>
+    <div class="offset-4 col-4" style="text-align: right;">
+        <button type="button" class="btn btn-success" (click)="openDialogCadastrarHorario()" >+ Novo Horário</button>
+    </div>
+</div>
+
+
+<br>
+
+@if(agendamentos.length > 0){
+    <div class="table-responsive small">
+        <table class="table  table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Hora</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for(item of agendamentos; track item.id){
+                    <tr>
+                        <td>{{item.data}}</td>
+                        <td>
+
+                            @if(item.status === 'agendado'){
+                                <span class="badge text-bg-info">Agendado</span>
+                            }
+
+                            @if(item.status === 'disponivel'){
+                                <span class="badge text-bg-secondary">Livre</span>
+                            }
+
+                            @if(item.status === 'confirmado'){
+                                <span class="badge text-bg-success">Confirmado</span>
+                            }
+
+                        </td>
+                        <td>{{item.horarioInicio}} às {{item.horarioFim}}</td>
+                        <td>{{item.nomeCliente ?? '-'}}</td>
+                        <td>
+
+                            @if(item.status === 'agendado'){
+                                <span class="pointer badge rounded-pill text-bg-success" (click)="confirmarAtendimento(item)"><i class="bi bi-check" ></i> Confirmar</span> &nbsp;
+                                <span class="pointer badge rounded-pill text-bg-danger" (click)="cancelarAtendimento(item)"><i class="bi bi-x-circle-fill"></i> Cancelar</span> &nbsp;
+                            }
+
+                            @if(item.status === 'disponivel'){
+                                <!-- <span class="pointer badge rounded-pill text-bg-success"><i class="bi bi-person-plus-fill"></i> Agendar</span> &nbsp; -->
+                                <span class="pointer badge rounded-pill text-bg-danger"><i class="bi bi-x-circle-fill"></i> Excluir</span> &nbsp;
+                            }
+
+                            @if(item.status === 'confirmado'){
+                                <span class="pointer badge rounded-pill text-bg-danger" (click)="cancelarAtendimento(item)"><i class="bi bi-x-circle-fill"></i> Cancelar</span> &nbsp;
+                            }
+                        </td>
+                    </tr>
+                }
+
+                
+    
+    
+            </tbody>
+        </table>
+    </div>
+}
+@else {
+    <h5>Nenhum agendamento encontrado.</h5>
+}
+

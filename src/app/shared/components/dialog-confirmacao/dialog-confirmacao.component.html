@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Confirmação</h2>
+<mat-dialog-content>
+    
+    <h4 [innerHTML]="textoConfirmacao"></h4>
+    
+</mat-dialog-content>
+<mat-dialog-actions style="text-align: right;">
+    <div style="padding: 10px;">
+
+        <button class="btn btn-secondary"  [mat-dialog-close]="false" >Não</button> &nbsp;
+        <button class="btn btn-success" cdkFocusInitial [mat-dialog-close]="true">Sim</button>
+    </div>
+</mat-dialog-actions>

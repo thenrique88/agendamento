@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Cadastrar Novo Horario</h2>
+<mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Selecione a data</mat-label>
+        <input matInput [matDatepicker]="picker" disabled="" [(ngModel)]="dia">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <div class="mt-1">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Horário" aria-label="Horário" mask="00:00" [(ngModel)]="horario">
+            <span class="input-group-text"> > </span>
+            <input class="form-control" placeholder="Tempo" type="number" [(ngModel)]="tempoAtendimento" maxlength="2 ">
+            <span class="input-group-text">min</span>
+          </div>
+    </div>
+    
+</mat-dialog-content>
+<mat-dialog-actions style="text-align: right;">
+    <button class="btn btn-secondary"  [mat-dialog-close]="false" >Cancelar</button> &nbsp;
+    <button class="btn btn-success" cdkFocusInitial (click)="cadastrarHorario()">Cadastrar</button>
+</mat-dialog-actions>

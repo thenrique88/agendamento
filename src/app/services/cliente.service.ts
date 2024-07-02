@@ -18,6 +18,10 @@ export class ClienteService {
     return this.http.post<ResponseModel<ClienteModel>>(`${this.urlApi}/login/codigo/confirmacao`, request, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})});
   }
 
+  reenviarCodigoConfirmacaoLogin(request: LoginClienteModel){
+    return this.http.post<ResponseModel<ClienteModel>>(`${this.urlApi}/login/codigo/confirmacao/reenviar`, request, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})});
+  }
+
   confirmarCodigoLoginCliente(idCliente: string, codigo: string){
     return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idCliente}/confirmar/codigo/${codigo}`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})});
   }

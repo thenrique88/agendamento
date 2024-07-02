@@ -7,6 +7,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { HttpRequestInterceptor } from './shared/components/http-interceptor';
+import { provideToastr } from 'ngx-toastr';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideRouter(routes), 
     provideAnimationsAsync(), 
+    provideToastr(), // Toastr providers
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
     provideEnvironmentNgxMask(maskConfig),
     {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}

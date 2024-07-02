@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HorariosSemanaModel } from '../shared/models/horarios-semana-model';
 import { AgendamentoModel } from '../shared/models/agendamento.model';
 import { ResponseModel } from '../shared/models/response.model';
+import { HorarioModel } from '../shared/models/horario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class AgendamentoService {
   constructor(private http: HttpClient) { }
 
 
+  cadastrarHorarioDisponivel(request: HorarioModel){
+    return this.http.post<ResponseModel<string>>(`${this.urlApi}`, request, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})});
+  };
 
   buscarAgendamento(id: string) {
 
@@ -38,7 +42,19 @@ export class AgendamentoService {
       return this.http.get<HorariosSemanaModel>(`${this.urlApi}/horarios/semana?data=${dataInicial}`, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})});
   }
 
-  confirmarAgendamento(idCliente: string, idAgendamento: string){
-    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/confirmar/cliente/${idCliente}`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  buscarAgendamentosDoMes(mes: number){
+    return this.http.get<ResponseModel<AgendamentoModel[]>>(`${this.urlApi}/mes/${mes}`, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  }
+
+  agendarAtendimento(idCliente: string, idAgendamento: string){
+    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/agendar/cliente/${idCliente}`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  }
+
+  cancelarAgendamento(idAgendamento: string){
+    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/cancelar`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  }
+
+  confirmarAgendamento(idAgendamento: string){
+    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/confirmar`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
   }
 }

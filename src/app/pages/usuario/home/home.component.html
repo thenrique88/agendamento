@@ -11,7 +11,7 @@
                         <div class="col-md-3">
                             <div class="perfil">
                                 <div class="foto-perfil">
-                                    <img src="../../../../assets/imgs/img-perfil-1000x1000.png" alt="Foto de perfil">
+                                    <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png" alt="Foto de perfil">
                                 </div>
 
                             </div>
@@ -51,13 +51,13 @@
                                     <i class="fa-brands fa-square-whatsapp"></i> &nbsp; <b>WHATSAPP</b>
                                 </div>
                                 <div class="conteudo py-2">
-                                    (31) 99999-9999
+                                    (31) 97139-1867
                                 </div>
                                 <div class="titulo-opaco">
                                     <i class="fa-solid fa-location-dot"></i> &nbsp; <b>ENDEREÇO</b>
                                 </div>
                                 <div class="conteudo py-2">
-                                    Rua Teste, nº 999 - Teste - Belo Horizonte - MG - 31.999-999
+                                    Avenida Portugal, 4273 - Sala 304 - Itapoã
                                 </div>
                             </div>
                         </div>
@@ -73,17 +73,22 @@
 </section>
 
 <section class="secao-agenda mt-5">
+
+
     <div class="container">
+        @if(loading){
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
 
         <div class="box-selection-week">
             <div>
-                <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataSemanaAnterior)">
                     <mat-icon>arrow_back_ios</mat-icon>
                 </button>
             </div>
-            <div><b>{{horariosSemana.semana}}</b></div>
+            <div><b>{{horariosSemana!.semana}}</b></div>
             <div>
-                <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataProximaSemana)">
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button>
 
@@ -202,6 +207,22 @@
         </div>
     }
         
+    @if(
+        horariosSemana.segunda.agendamentos.length == 0 &&
+        horariosSemana.terca.agendamentos.length == 0 &&
+        horariosSemana.quarta.agendamentos.length == 0 &&
+        horariosSemana.quinta.agendamentos.length == 0 &&
+        horariosSemana.sexta.agendamentos.length == 0 &&
+        horariosSemana.sabado.agendamentos.length == 0 &&
+        horariosSemana.domingo.agendamentos.length == 0 
+
+    ){
+        <div style="text-align: center;">
+<br>
+<br>
+            <h5>Nenhum horário disponível nessa semana.</h5>
+        </div>
+    }
 
     </div>
 
