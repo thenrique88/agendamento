@@ -1,4 +1,8 @@
 
+@if(loading){
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+
 <div class="row">
     <div class="col-4">
         <div class="form-group">
@@ -25,7 +29,9 @@
                     <th scope="col">Data</th>
                     <th scope="col">Status</th>
                     <th scope="col">Hora</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Paciente</th>
+                    <th scope="col">Whatsapp</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -50,7 +56,14 @@
 
                         </td>
                         <td>{{item.horarioInicio}} às {{item.horarioFim}}</td>
+                        @if(item.tipoAgendamento){
+                            <td>{{item.tipoAgendamento === 'primeiro' ? 'Único' : 'Plano'}}</td>
+                        }
+                        @else {
+                        <td>-</td>
+                        }
                         <td>{{item.nomeCliente ?? '-'}}</td>
+                        <td>{{item.whatsappCliente ?? '-'}}</td>
                         <td>
 
                             @if(item.status === 'agendado'){
@@ -60,7 +73,7 @@
 
                             @if(item.status === 'disponivel'){
                                 <!-- <span class="pointer badge rounded-pill text-bg-success"><i class="bi bi-person-plus-fill"></i> Agendar</span> &nbsp; -->
-                                <span class="pointer badge rounded-pill text-bg-danger"><i class="bi bi-x-circle-fill"></i> Excluir</span> &nbsp;
+                                <span class="pointer badge rounded-pill text-bg-danger" (click)="excluir(item)"><i class="bi bi-x-circle-fill"></i> Excluir</span> &nbsp;
                             }
 
                             @if(item.status === 'confirmado'){

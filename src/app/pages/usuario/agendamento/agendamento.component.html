@@ -12,7 +12,8 @@
                         <div class="col-md-3">
                             <div class="perfil">
                                 <div class="foto-perfil">
-                                    <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png" alt="Foto de perfil">
+                                    <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png"
+                                        alt="Foto de perfil">
                                 </div>
 
                             </div>
@@ -32,19 +33,47 @@
                             <div class="sobre mt-3">
 
                                 <div class="titulo-opaco">
+                                    <i class="fa-regular fa-calendar"></i> &nbsp; <b>{{agendamento.data}}</b>
+                                </div>
+                                <div class="titulo-opaco">
+                                    <i class="fa-solid fa-clock"></i> &nbsp; <b>{{agendamento.horarioInicio}} às
+                                        {{agendamento.horarioFim}}</b>
+                                </div>
+                                <div class="titulo-opaco">
+                                    <i class="fa-solid fa-road"></i> &nbsp; <b>Av. Portugal 4273 - Sala 303 - Itapoã</b>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                @if(exibirFormLogin || exibirFormCodigoConfirmacao || exibirFormDadosCliente){
+
+                                <div class="titulo-opaco">
                                     <b>CONFIRMAR AGENDAMENTO</b>
                                 </div>
-                                <br>
-                                <div class="titulo-opaco">
-                                    <i class="fa-regular fa-calendar"></i> &nbsp; {{agendamento.data}}
+
+                                }
+
+                                @if(exibirAgendamentoConfirmado && !primeiroAgendamento){
+
+                                <div class="titulo-opaco" style="color: rgb(0, 74, 22);">
+                                    <i class="bi bi-check-square-fill"></i> &nbsp;<b>AGENDAMENTO FINALIZADO</b>
                                 </div>
-                                <div class="titulo-opaco">
-                                    <i class="fa-solid fa-clock"></i> &nbsp; {{agendamento.horarioInicio}} às
-                                    {{agendamento.horarioFim}}
-                                </div>
-                                <div class="titulo-opaco">
-                                    <i class="fa-solid fa-road"></i> &nbsp; Av. Portugal 4273 - Sala 303 - Itapoã
-                                </div>
+
+                                }
+
+                                @if(exibirAgendamentoConfirmado && primeiroAgendamento){
+
+                                    <div class="titulo-opaco" style="color: rgb(255, 123, 0);">
+                                        <i class="bi bi-clock"></i> &nbsp;<b>AGENDAMENTO PENDENTE</b>
+                                    </div>
+    
+                                    }
+
+                                
+                                @if(loading){
+                                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                                }
                                 <div class="conteudo py-2">
 
                                     <form [formGroup]="formDados" (ngSubmit)="submitDados()">
@@ -83,7 +112,8 @@
 
                                         <div class="mt-3" style="display: flex; justify-content: space-between;">
                                             <div>
-                                                <span>Para confirmar sua identidade, insira o código de 6 dígitos enviado ao seu Whatsapp.</span>
+                                                <span>Para confirmar sua identidade, insira o código de 6 dígitos
+                                                    enviado ao seu Whatsapp.</span>
                                             </div>
                                         </div>
                                         <div class="mt-4">
@@ -97,10 +127,11 @@
                                                 <button type="submit" class="btn btn-success">Confirmar</button>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-secondary" (click)="reenviarCodigoConfirmacao()" [disabled]="desabilitarBotaoReenviarCodigo">Não recebi</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="reenviarCodigoConfirmacao()"
+                                                    [disabled]="desabilitarBotaoReenviarCodigo">Não recebi</button>
                                             </div>
                                         </div>
-
 
                                         }
                                     </form>
@@ -113,12 +144,29 @@
                                         </div>
                                     </div>
 
+                                    <div class="mt-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio1" value="option1"
+                                                (click)="setarTipoAgendamento('primeiro')">
+                                            <label class="form-check-label" for="inlineRadio1">Atendimento único</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio2" value="option2"
+                                                (click)="setarTipoAgendamento('plano')">
+                                            <label class="form-check-label" for="inlineRadio2">Plano </label>
+                                        </div>
+                                    </div>
+
                                     <div class="mt-3" style="display: flex; justify-content: space-between;">
                                         <div>
                                             <span>Confira os dados do agendamento. Podemos confirmar o seu
                                                 agendamento?</span>
                                         </div>
                                     </div>
+
+
 
                                     <div class="mt-3">
                                         <button type="button" class="btn btn-success w-100"
@@ -144,11 +192,9 @@
                                     <div class="mt-3" style="display: flex; justify-content: space-between;">
                                         <div>
                                             <span>
-                                                <h6>Seu atendimento foi agendado com sucesso.</h6>
+                                                <h6>{{mensagemFinalAgendamento}}</h6>
                                             </span>
-                                            <span>
-                                                <h6>Obrigada pelo seu agendamento.</h6>
-                                            </span>
+                                            
                                             <br>
                                             @if(exibirMensagemConfirmacaoWhatsapp){
                                             <span>Você receberá uma confirmação no seu Whatsapp dentro de alguns

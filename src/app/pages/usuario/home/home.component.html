@@ -11,12 +11,13 @@
                         <div class="col-md-3">
                             <div class="perfil">
                                 <div class="foto-perfil">
-                                    <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png" alt="Foto de perfil">
+                                    <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png"
+                                        alt="Foto de perfil">
                                 </div>
 
                             </div>
                             <div class="titulo-empresa pt-2">
-                                <b>Jéssica Caroline Massoterapeuta</b>
+                                <b>Studio de liberação miofascial <br> Jéssica Caroline</b>
                             </div>
                             <div class="avaliacao">
                                 <span class="estrela" data-valor="1">&#9733;</span>
@@ -25,6 +26,7 @@
                                 <span class="estrela" data-valor="4">&#9733;</span>
                                 <span class="estrela" data-valor="5">&#9733;</span>
                             </div>
+                            
                             <!-- <div class="agendar">
                                 <button type="button" class="btn btn-success">
                                     <i class="fa-solid fa-calendar"></i>
@@ -35,26 +37,39 @@
                         <div class="col-md-9">
                             <div class="sobre mt-3">
 
+                                <div class="titulo-opaco" style="font-size: 16px; text-align: center;">
+                                    <b>Olá, bem vindo ao meu sistema de agendamento.</b>
+                                </div>
+                                <div class="conteudo py-2" style="text-align: left;">
+                                    Me chamo Jéssica Caroline, sou massoterapeuta registrada em terapias holísticas,
+                                    graduanda em fisioterapia, casada, mãe e cristã.<br><br>
+
+                                    A sessão de liberação miofascial tem a duração entre 1 hora e 1 hora e 20 minutos.
+                                    As técnicas a serem utilizadas são personalizadas para cada queixa.👇🏻<br><br>
+
+                                    - Liberação miofascial<br>
+                                    - Massagem esportiva<br>
+                                    - Massoterapia para relaxamento<br>
+                                    - Ventosaterapia<br>
+                                    - Agulhamento à seco.<br><br>
+
+                                    Valor da sessão individual: R$ 150,00 <br><br>
+
+                                    Meu objetivo é aliviar suas dores ❤️<br><br>
+
+                                    Encontre um horário que tenha disponibilidade e aguarde a mensagem de
+                                    confirmação!<br><br>
+
+                                    Qualquer outra dúvida entre em contato pelo whatsapp.
+                                </div>
                                 <div class="titulo-opaco">
-                                    <i class="fa-solid fa-shop"></i> &nbsp; <b>SOBRE</b>
+                                    <i class="fa-brands fa-square-whatsapp"></i> <b><span style="padding-left: 5px">Whatsapp</span></b>
                                 </div>
                                 <div class="conteudo py-2">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the
-                                    industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                                    galley of type and
-                                    scrambled it to make a type specimen book. It has survived not only five centuries,
-                                    but also the leap
-                                    into electronic typesetting, remaining essentially unchanged.
+                                    <a href="http://wa.me/5531971391867" target="_blank" style="text-decoration: none;">(31) 97139-1867</a>
                                 </div>
                                 <div class="titulo-opaco">
-                                    <i class="fa-brands fa-square-whatsapp"></i> &nbsp; <b>WHATSAPP</b>
-                                </div>
-                                <div class="conteudo py-2">
-                                    (31) 97139-1867
-                                </div>
-                                <div class="titulo-opaco">
-                                    <i class="fa-solid fa-location-dot"></i> &nbsp; <b>ENDEREÇO</b>
+                                    <i class="fa-solid fa-location-dot"></i> <b><span style="padding-left: 6px">Endereço</span></b>
                                 </div>
                                 <div class="conteudo py-2">
                                     Avenida Portugal, 4273 - Sala 304 - Itapoã
@@ -72,157 +87,169 @@
 
 </section>
 
-<section class="secao-agenda mt-5">
+<section class="secao-agenda mt-3">
 
 
     <div class="container">
-        @if(loading){
+
+
+        <div class="card shadow-lg p-3 ">
+
+
+            @if(loading){
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        }
+            }
 
-        <div class="box-selection-week">
-            <div>
-                <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataSemanaAnterior)">
-                    <mat-icon>arrow_back_ios</mat-icon>
-                </button>
+            <div class="box-selection-week">
+                <div>
+                    <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataSemanaAnterior)">
+                        <mat-icon>arrow_back_ios</mat-icon>
+                    </button>
+                </div>
+                <div><b><div style="border-radius: 5px; background-color: rgb(236, 236, 236); padding: 5px 10px 5px 10px; color: #000000;">{{horariosSemana!.semana}}</div></b></div>
+                <div>
+                    <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataProximaSemana)">
+                        <mat-icon>arrow_forward_ios</mat-icon>
+                    </button>
+
+                </div>
             </div>
-            <div><b>{{horariosSemana!.semana}}</b></div>
-            <div>
-                <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataProximaSemana)">
-                    <mat-icon>arrow_forward_ios</mat-icon>
-                </button>
 
-            </div>
-        </div>
-
-        @if(horariosSemana.domingo.agendamentos.length > 0){
+            @if(horariosSemana.domingo.agendamentos.length > 0){
 
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.domingo.dia}} - Domingo</b></span>
-            </div>
-            <div class="text-center">
-                @for (item of horariosSemana.domingo.agendamentos; track horariosSemana.domingo.agendamentos) {
+            <div class="mt-3">
+                <div class="text-center">
+                    <span style="color: #707070;"><b>{{horariosSemana.domingo.dia}} - Domingo</b></span>
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.domingo.agendamentos; track horariosSemana.domingo.agendamentos) {
                     <button type="button" (click)="selecionarHorario(item)"
-                        class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
                     }
-                
-            </div>
-        </div>
 
-    }
-    @if(horariosSemana.segunda.agendamentos.length > 0){
+                </div>
+            </div>
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.segunda.dia}} - Segunda-feira</b></span>
-            </div>
-            <div class="text-center">
-                @for (item of horariosSemana.segunda.agendamentos; track horariosSemana.segunda.agendamentos) {
-                <button type="button" (click)="selecionarHorario(item)"
-                    class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
-                }
-                
-            </div>
-        </div>
-    }
-    @if(horariosSemana.terca.agendamentos.length > 0){
+            }
+            @if(horariosSemana.segunda.agendamentos.length > 0){
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.terca.dia}} - Terça-feira</b></span>
-            </div>
-            <div class="text-center">
-                @for (item of horariosSemana.terca.agendamentos; track horariosSemana.terca.agendamentos) {
+            <div class="mt-3">
+                <div class="text-center">
+                    <span style="color: #707070;"><b>{{horariosSemana.segunda.dia}} - Segunda-feira</b></span>
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.segunda.agendamentos; track horariosSemana.segunda.agendamentos) {
                     <button type="button" (click)="selecionarHorario(item)"
-                        class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
                     }
-                
 
+                </div>
             </div>
-        </div>
-    }
-    @if(horariosSemana.quarta.agendamentos.length > 0){
+            }
+            @if(horariosSemana.terca.agendamentos.length > 0){
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.quarta.dia}} - Quarta-feira</b></span>
-            </div>
-            <div class="text-center">
-                @for (item of horariosSemana.quarta.agendamentos; track horariosSemana.quarta.agendamentos) {
+            <div class="mt-3">
+                <div class="text-center">
+                    <span style="color: #707070;"><b>{{horariosSemana.terca.dia}} - Terça-feira</b></span>
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.terca.agendamentos; track horariosSemana.terca.agendamentos) {
                     <button type="button" (click)="selecionarHorario(item)"
-                        class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
                     }
-                
 
-            </div>
-        </div>
-    }
-    @if(horariosSemana.quinta.agendamentos.length > 0){
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.quinta.dia}} - Quinta-feira</b></span>
+                </div>
             </div>
-            <div class="text-center">
-                @for (item of horariosSemana.quinta.agendamentos; track horariosSemana.quinta.agendamentos) {
+            }
+            @if(horariosSemana.quarta.agendamentos.length > 0){
+
+            <div class="mt-3">
+                <div class="text-center">
+                    <span style="color: #707070;"><b>{{horariosSemana.quarta.dia}} - Quarta-feira</b></span>
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.quarta.agendamentos; track horariosSemana.quarta.agendamentos) {
                     <button type="button" (click)="selecionarHorario(item)"
-                        class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
                     }
-                
-            </div>
-        </div>
-    }
-    @if(horariosSemana.sexta.agendamentos.length > 0){
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.sexta.dia}} - Sexta-feira</b></span>
+
+                </div>
             </div>
-            <div class="text-center">
-                @for (item of horariosSemana.sexta.agendamentos; track horariosSemana.sexta.agendamentos) {
+            }
+            @if(horariosSemana.quinta.agendamentos.length > 0){
+
+            <div class="mt-3">
+                <div class="text-center">
+                    <span style="color: #707070;"><b>{{horariosSemana.quinta.dia}} - Quinta-feira</b></span>
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.quinta.agendamentos; track horariosSemana.quinta.agendamentos) {
                     <button type="button" (click)="selecionarHorario(item)"
-                        class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
                     }
-                
 
+                </div>
             </div>
-        </div>
-    }
-    @if(horariosSemana.sabado.agendamentos.length > 0){
+            }
+            @if(horariosSemana.sexta.agendamentos.length > 0){
 
-        <div class="mt-3">
-            <div class="text-center">
-                <span style="color: #707070;"><b>{{horariosSemana.sabado.dia}} - Sábado</b></span>
-            </div>
-            <div class="text-center">
-                @for (item of horariosSemana.sabado.agendamentos; track horariosSemana.sabado.agendamentos) {
+            <div class="mt-3">
+                <div class="text-center">
+                    <span style="color: #707070;"><b>{{horariosSemana.sexta.dia}} - Sexta-feira</b></span>
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.sexta.agendamentos; track horariosSemana.sexta.agendamentos) {
                     <button type="button" (click)="selecionarHorario(item)"
-                        class="btn btn-outline-success btn-sm m-1">{{item.horarioInicio}}</button>
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
                     }
-                
 
+
+                </div>
             </div>
-        </div>
-    }
-        
-    @if(
-        horariosSemana.segunda.agendamentos.length == 0 &&
-        horariosSemana.terca.agendamentos.length == 0 &&
-        horariosSemana.quarta.agendamentos.length == 0 &&
-        horariosSemana.quinta.agendamentos.length == 0 &&
-        horariosSemana.sexta.agendamentos.length == 0 &&
-        horariosSemana.sabado.agendamentos.length == 0 &&
-        horariosSemana.domingo.agendamentos.length == 0 
+            }
+            @if(horariosSemana.sabado.agendamentos.length > 0){
 
-    ){
-        <div style="text-align: center;">
-<br>
-<br>
-            <h5>Nenhum horário disponível nessa semana.</h5>
+            <div class="mt-3">
+                <div class="text-center">
+                    @if(horariosSemana.sabado.dia === '20/07'){
+                        <span style="color: #707070;"><b>{{horariosSemana.sabado.dia}} - Sábado</b><br>(Somente atendimento Express)</span>
+                    }
+                    @else {
+                        <span style="color: #707070;"><b>{{horariosSemana.sabado.dia}} - Sábado</b></span>
+                    }
+                </div>
+                <div class="text-center">
+                    @for (item of horariosSemana.sabado.agendamentos; track horariosSemana.sabado.agendamentos) {
+                    <button type="button" (click)="selecionarHorario(item)"
+                        class="btn btn-outline-dark btn-sm m-1">{{item.horarioInicio}}</button>
+                    }
+
+
+                </div>
+            </div>
+            }
+
+            @if(
+            horariosSemana.segunda.agendamentos.length == 0 &&
+            horariosSemana.terca.agendamentos.length == 0 &&
+            horariosSemana.quarta.agendamentos.length == 0 &&
+            horariosSemana.quinta.agendamentos.length == 0 &&
+            horariosSemana.sexta.agendamentos.length == 0 &&
+            horariosSemana.sabado.agendamentos.length == 0 &&
+            horariosSemana.domingo.agendamentos.length == 0
+
+            ){
+            <div style="text-align: center;">
+                <br>
+                <br>
+                <h5>Nenhum horário disponível nessa semana.</h5>
+            </div>
+            }
+
         </div>
-    }
 
     </div>
 

@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
   loading = false;
   horariosSemana!: HorariosSemanaModel;
 
+
   constructor(private router: Router, private agendamentoService: AgendamentoService) {
 
   }

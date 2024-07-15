@@ -43,7 +43,7 @@ export class DialogCadastrarHorarioComponent {
 
   constructor(private toastrService: ToastrService, private agendamentoService: AgendamentoService) {
     this.horario = '';
-    this.tempoAtendimento = '90';
+    this.tempoAtendimento = '80';
     this.dia = new Date();
   }
 

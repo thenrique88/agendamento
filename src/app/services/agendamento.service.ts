@@ -46,8 +46,8 @@ export class AgendamentoService {
     return this.http.get<ResponseModel<AgendamentoModel[]>>(`${this.urlApi}/mes/${mes}`, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
   }
 
-  agendarAtendimento(idCliente: string, idAgendamento: string){
-    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/agendar/cliente/${idCliente}`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  agendarAtendimento(idCliente: string, idAgendamento: string, tipoAtendimento: string){
+    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/agendar/cliente/${idCliente}/${tipoAtendimento}`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
   }
 
   cancelarAgendamento(idAgendamento: string){
@@ -56,5 +56,9 @@ export class AgendamentoService {
 
   confirmarAgendamento(idAgendamento: string){
     return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/confirmar`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  }
+
+  excluir(idAgendamento: string){
+    return this.http.post<ResponseModel<boolean>>(`${this.urlApi}/${idAgendamento}/excluir`, null, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
   }
 }
