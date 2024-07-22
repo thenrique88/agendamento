@@ -39,7 +39,7 @@ export class AgendaComponent {
   ];
   mesSelecionado: number;
   agendamentos: AgendamentoModel[] = [];
-
+  mostrarMesInteiro = false;
   readonly dialog = inject(MatDialog);
 
 
@@ -59,7 +59,7 @@ export class AgendaComponent {
 
   buscarAgendamento(mes: number): void {
     this.loading = true;
-    this.agendamentoService.buscarAgendamentosDoMes(this.mesSelecionado)
+    this.agendamentoService.buscarAgendamentosDoMes(this.mesSelecionado, this.mostrarMesInteiro.toString())
       .subscribe(r => {
         if (r.sucesso) {
           this.agendamentos = r.data;
@@ -70,6 +70,13 @@ export class AgendaComponent {
           this.loading = false;
         }
       });
+  }
+
+  checkMostrarMesInteiro() {
+    this.mostrarMesInteiro = !this.mostrarMesInteiro;
+    this.buscarAgendamento(this.mesSelecionado);
+
+
   }
 
   cadastrarNovoHorario() {

@@ -42,8 +42,8 @@ export class AgendamentoService {
       return this.http.get<HorariosSemanaModel>(`${this.urlApi}/horarios/semana?data=${dataInicial}`, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})});
   }
 
-  buscarAgendamentosDoMes(mes: number){
-    return this.http.get<ResponseModel<AgendamentoModel[]>>(`${this.urlApi}/mes/${mes}`, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
+  buscarAgendamentosDoMes(mes: number, mesInteiro: string){
+    return this.http.get<ResponseModel<AgendamentoModel[]>>(`${this.urlApi}/mes/${mes+1}?mc=${mesInteiro}`, {headers: new HttpHeaders({'ngrok-skip-browser-warning': '69420'})})
   }
 
   agendarAtendimento(idCliente: string, idAgendamento: string, tipoAtendimento: string){
