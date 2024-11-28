@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Component, inject, model, OnInit } from '@angular/core';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +22,11 @@ import { AgendamentoService } from '../../../services/agendamento.service';
 import { HorariosSemanaModel } from '../../../shared/models/horarios-semana-model';
 import { AgendamentoModel } from '../../../shared/models/agendamento.model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DialogPlanosComponent } from './components/dialog-planos/dialog-planos.component';
+import { CalendarioComponent } from "./components/calendario/calendario.component";
+import { FormControl } from '@angular/forms';
+import * as _moment from 'moment';
+import moment, { Moment } from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -33,18 +38,23 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatDatepickerModule,
     MatCardModule,
     MatTabsModule,
-    MatProgressBarModule
-  ],
+    MatProgressBarModule,
+    CalendarioComponent, CalendarioComponent
+],
   providers: [provideNativeDateAdapter()],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  selected: Date | null | undefined;
+  readonly dialog = inject(MatDialog);
+
+  //selected: Date | null | undefined;
+  selected = model<Date | null>(null);
   loading = false;
   horariosSemana!: HorariosSemanaModel;
 
-
+  readonly date = new FormControl(moment());
+  
   constructor(private router: Router, private agendamentoService: AgendamentoService) {
 
   }
@@ -69,6 +79,22 @@ export class HomeComponent implements OnInit {
       );
     }
 
+  }
+
+  openDialogCadastrarHorario() {
+    const dialogRef = this.dialog.open(DialogPlanosComponent, {
+      data: { },
+      disableClose: false,
+      width: '300px'
+    });
+  }
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value ?? moment();
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
   }
 
 }

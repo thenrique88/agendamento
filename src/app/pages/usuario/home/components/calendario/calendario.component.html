@@ -1,0 +1,24 @@
+<div class="container text-center">
+    <div class="row">
+      <div class="col-12 mb-3">
+        <h5>Selecione um Mês e Ano</h5>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <div class="col-auto">
+        <div class="input-group">
+          <button class="btn btn-outline-secondary" type="button" (click)="changeYear(-1)">Anterior</button>
+          <input type="text" class="form-control text-center" value="{{ selectedYear }}" readonly />
+          <button class="btn btn-outline-secondary" type="button" (click)="changeYear(1)">Próximo</button>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-auto" *ngFor="let month of months; let i = index">
+        <button class="btn btn-outline-primary" (click)="selectMonth(i + 1)">
+          {{ month }}
+        </button>
+      </div>
+    </div>
+  </div>
+  

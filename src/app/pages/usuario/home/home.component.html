@@ -44,7 +44,7 @@
                                     Me chamo Jéssica Caroline, sou massoterapeuta registrada em terapias holísticas,
                                     graduanda em fisioterapia, casada, mãe e cristã.<br><br>
 
-                                    A sessão de liberação miofascial tem a duração entre 1 hora e 1 hora e 20 minutos.
+                                    A sessão de liberação miofascial tem a duração entre 1 hora e 1 hora e 15 minutos.
                                     As técnicas a serem utilizadas são personalizadas para cada queixa.👇🏻<br><br>
 
                                     - Liberação miofascial<br>
@@ -53,7 +53,9 @@
                                     - Ventosaterapia<br>
                                     - Agulhamento à seco.<br><br>
 
-                                    Valor da sessão individual: R$ 150,00 <br><br>
+                                    Valor da sessão individual: R$ 170,00 <br>
+
+                                    <span (click)="openDialogCadastrarHorario()" target="_blank" style="color: blue; cursor: pointer;">Clique aqui e veja os valores dos planos com desconto.</span><br><br>
 
                                     Meu objetivo é aliviar suas dores ❤️<br><br>
 
@@ -92,7 +94,6 @@
 
     <div class="container">
 
-
         <div class="card shadow-lg p-3 ">
 
 
@@ -101,7 +102,14 @@
             }
 
             <div class="box-selection-week">
-                <div>
+
+                <div style="display: flex; justify-content: space-between; width: 100%;" >
+                    <div><button mat-raised-button>OUTUBRO</button></div>
+                    <div><button mat-raised-button>NOVEMBRO</button></div>
+                    <div><button mat-raised-button>DEZEMBRO</button></div>
+                </div>
+
+                <!-- <div>
                     <button mat-icon-button (click)="buscarHorarioDaSemana(horariosSemana.dataSemanaAnterior)">
                         <mat-icon>arrow_back_ios</mat-icon>
                     </button>
@@ -112,7 +120,7 @@
                         <mat-icon>arrow_forward_ios</mat-icon>
                     </button>
 
-                </div>
+                </div> -->
             </div>
 
             @if(horariosSemana.domingo.agendamentos.length > 0){

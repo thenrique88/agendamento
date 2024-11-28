@@ -59,6 +59,8 @@ export class AgendaComponent {
 
   buscarAgendamento(mes: number): void {
     this.loading = true;
+    console.log(this.mesSelecionado);
+    let numeroMesSelecionado = this.mesSelecionado + 1;
     this.agendamentoService.buscarAgendamentosDoMes(this.mesSelecionado, this.mostrarMesInteiro.toString())
       .subscribe(r => {
         if (r.sucesso) {
@@ -74,8 +76,9 @@ export class AgendaComponent {
 
   checkMostrarMesInteiro() {
     this.mostrarMesInteiro = !this.mostrarMesInteiro;
-    this.buscarAgendamento(this.mesSelecionado);
 
+    
+    this.buscarAgendamento(this.mesSelecionado);
 
   }
 
@@ -86,6 +89,7 @@ export class AgendaComponent {
   openDialogCadastrarHorario() {
     const dialogRef = this.dialog.open(DialogCadastrarHorarioComponent, {
       data: { name: '', animal: '' },
+      width: '800px',
       disableClose: true
     });
 

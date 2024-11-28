@@ -21,3 +21,29 @@
     <button class="btn btn-secondary"  [mat-dialog-close]="false" >Cancelar</button> &nbsp;
     <button class="btn btn-success" cdkFocusInitial (click)="cadastrarHorario()">Cadastrar</button>
 </mat-dialog-actions>
+
+<!-- <h2 mat-dialog-title>Cadastrar Novo Horario</h2>
+<mat-dialog-content>
+    <button class="btn btn-success" cdkFocusInitial (click)="inclurNovoHorario()">Incluir Horário</button>
+      <br>
+      <div class="mt-1">
+
+        @for(item of horarios; track item.horario){
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Dia" aria-label="Dia" mask="00/00/0000" [(ngModel)]="item.data">
+            <span class="input-group-text"> > </span>
+            <input type="text" class="form-control" placeholder="Horário" aria-label="Horário" mask="00:00" [(ngModel)]="item.horario">
+            <span class="input-group-text"> > </span>
+            <input class="form-control" placeholder="Tempo" type="number" [(ngModel)]="item.tempoAtendimento" maxlength="2 ">
+            <span class="input-group-text">min</span>
+            <i style="color: red; font-size: 20px; margin-left: 10px; margin-top: 10px; cursor: pointer;" class="fa-solid fa-close" (click)="excluirHorario(item.id)"></i>
+          </div>
+        }
+
+    </div>
+    
+</mat-dialog-content>
+<mat-dialog-actions style="text-align: right;">
+    <button class="btn btn-secondary"  [mat-dialog-close]="false" >Cancelar</button> &nbsp;
+    <button class="btn btn-success" cdkFocusInitial (click)="validarHorarios()">Cadastrar</button>
+</mat-dialog-actions> -->
