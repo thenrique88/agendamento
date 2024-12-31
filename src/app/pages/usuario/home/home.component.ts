@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscarHorarioDaSemana();
+    localStorage.clear();
   }
 
   selecionarHorario(agendamento: AgendamentoModel): void {
