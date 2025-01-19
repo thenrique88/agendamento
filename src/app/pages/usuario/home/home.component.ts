@@ -27,6 +27,8 @@ import { CalendarioComponent } from "./components/calendario/calendario.componen
 import { FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import moment, { Moment } from 'moment';
+import { environment } from '../../../../environments/environment';
+import { DescricaoProfissionalComponent } from "./components/descricao-profissional/descricao-profissional.component";
 
 @Component({
   selector: 'app-home',
@@ -39,7 +41,8 @@ import moment, { Moment } from 'moment';
     MatCardModule,
     MatTabsModule,
     MatProgressBarModule,
-    CalendarioComponent, CalendarioComponent
+    CalendarioComponent, CalendarioComponent,
+    DescricaoProfissionalComponent
 ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './home.component.html',
@@ -52,16 +55,18 @@ export class HomeComponent implements OnInit {
   selected = model<Date | null>(null);
   loading = false;
   horariosSemana!: HorariosSemanaModel;
+  profissional = '';
 
   readonly date = new FormControl(moment());
   
   constructor(private router: Router, private agendamentoService: AgendamentoService) {
-
+    this.profissional = environment.profissional;
   }
 
   ngOnInit(): void {
     this.buscarHorarioDaSemana();
     localStorage.clear();
+
   }
 
   selecionarHorario(agendamento: AgendamentoModel): void {
@@ -98,4 +103,5 @@ export class HomeComponent implements OnInit {
     datepicker.close();
   }
 
+  
 }

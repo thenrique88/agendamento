@@ -11,13 +11,19 @@
                         <div class="col-md-3">
                             <div class="perfil">
                                 <div class="foto-perfil">
-                                    <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png"
-                                        alt="Foto de perfil">
+                                    @if(profissional == 'maeli'){
+                                        <img src="../../../../assets/imgs/perfil-maeli.png" alt="Foto de perfil">
+                                    }
+                                    
+                                    @if(profissional == 'jessica'){
+                                        <img src="../../../../assets/imgs/redonda-500x500-sem-fundo.png" alt="Foto de perfil">
+                                    }
+                                    
                                 </div>
 
                             </div>
                             <div class="titulo-empresa pt-2">
-                                <b>Studio de liberação miofascial <br> Jéssica Caroline</b>
+                                <b>JC <br> Studio de liberação miofascial</b>
                             </div>
                             <div class="avaliacao">
                                 <span class="estrela" data-valor="1">&#9733;</span>
@@ -40,31 +46,16 @@
                                 <div class="titulo-opaco" style="font-size: 16px; text-align: center;">
                                     <b>Olá, bem vindo ao meu sistema de agendamento.</b>
                                 </div>
-                                <div class="conteudo py-2" style="text-align: left;">
-                                    Me chamo Jéssica Caroline, sou massoterapeuta registrada em terapias holísticas,
-                                    graduanda em fisioterapia, casada, mãe e cristã.<br><br>
+                                <div class="py-2" style="text-align: left;">
+                                    
+                                    <app-descricao-profissional/>
 
-                                    A sessão de liberação miofascial tem a duração entre 1 hora e 1 hora e 15 minutos.
-                                    As técnicas a serem utilizadas são personalizadas para cada queixa.👇🏻<br><br>
-
-                                    - Liberação miofascial<br>
-                                    - Massagem esportiva<br>
-                                    - Massoterapia para relaxamento<br>
-                                    - Ventosaterapia<br>
-                                    - Agulhamento à seco.<br><br>
-
-                                    Valor da sessão individual: R$ 170,00 <br>
-
-                                    <span (click)="openDialogCadastrarHorario()" target="_blank" style="color: blue; cursor: pointer;">Clique aqui e veja os valores dos planos com desconto.</span><br><br>
-
-                                    Meu objetivo é aliviar suas dores ❤️<br><br>
-
-                                    Encontre um horário que tenha disponibilidade e aguarde a mensagem de
-                                    confirmação!<br><br>
-
-                                    Qualquer outra dúvida entre em contato pelo whatsapp.
+                                    @if(1 > 2)
+                                    {
+                                        <span (click)="openDialogCadastrarHorario()" target="_blank" style="color: blue; cursor: pointer;">Clique aqui e veja os valores dos planos com desconto.</span><br><br>
+                                    }
                                 </div>
-                                <div class="titulo-opaco">
+                                <!-- <div class="titulo-opaco">
                                     <i class="fa-brands fa-square-whatsapp"></i> <b><span style="padding-left: 5px">Whatsapp</span></b>
                                 </div>
                                 <div class="conteudo py-2">
@@ -75,7 +66,7 @@
                                 </div>
                                 <div class="conteudo py-2">
                                     Avenida Portugal, 4273 - Sala 304 - Itapoã
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -280,7 +271,7 @@
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
             }
 
-            <div style="color: red; font-size: 20px; text-align: center; padding-bottom: 20px; padding-top: 10px;">
+            <div style="display: none; color: red; font-size: 20px; text-align: center; padding-bottom: 20px; padding-top: 10px;">
                 <span ><b>Agenda de JANEIRO a partir do dia 28/12</b></span>
             </div>
 

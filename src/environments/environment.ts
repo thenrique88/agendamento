@@ -1,4 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://agendaapi.studiojessicacaroline.com.br'
+    apiUrl: 'https://agenda-maeliapi.studiojessicacaroline.com.br',
+    profissional: 'maeli'
+
 }
